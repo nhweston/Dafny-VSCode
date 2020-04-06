@@ -45,6 +45,7 @@ connection.onInitialize((params): InitializeResult => {
                 triggerCharacters: ["."],
             },
             definitionProvider: true,
+            hoverProvider: true,
             renameProvider: true,
             textDocumentSync: documents.syncKind,
         },
@@ -278,6 +279,14 @@ connection.onCompletion((handler: TextDocumentPositionParams) => {
         return provider.completionProvider.provideCompletion(handler);
     }
     return Promise.resolve([]);
+});
+
+connection.onHover((handler: TextDocumentPositionParams) => {
+    console.log("asdf");
+    if (provider && provider.hoverProvider) {
+        return provider.hoverProvider.provideHover(handler);
+    }
+    return Promise.resolve({contents: ""});
 });
 
 connection.listen();

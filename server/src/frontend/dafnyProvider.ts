@@ -5,6 +5,7 @@ import { DafnyCompiler } from "../backend/dafnyCompiler";
 import { DafnyServer } from "../backend/dafnyServer";
 import { IDafnySettings } from "../backend/dafnySettings";
 import { DafnyDefinitionProvider } from "../backend/features/definitionProvider";
+import { DafnyHoverProvider } from "../backend/features/hoverProvider";
 import { DafnyReferencesCodeLensProvider } from "../backend/features/referenceCodeLensProvider";
 import { NotificationService } from "../notificationService";
 import { DafnyVerbs, EnvironmentConfig } from "../strings/stringRessources";
@@ -19,6 +20,7 @@ export class DafnyServerProvider {
     public renameProvider: DafnyRenameProvider;
     public codeActionProvider: CodeActionProvider;
     public completionProvider: DafnyCompletionProvider;
+    public hoverProvider: DafnyHoverProvider;
     public compiler: DafnyCompiler;
     public dafnyServer: DafnyServer;
 
@@ -37,6 +39,7 @@ export class DafnyServerProvider {
         this.renameProvider = new DafnyRenameProvider(this.dafnyServer);
         this.codeActionProvider = new CodeActionProvider(this.dafnyServer);
         this.completionProvider = new DafnyCompletionProvider(this.dafnyServer);
+        this.hoverProvider = new DafnyHoverProvider(this.dafnyServer);
         this.compiler = new DafnyCompiler(this.notificationService, this.context, settings);
     }
 
