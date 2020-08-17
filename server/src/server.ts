@@ -284,7 +284,7 @@ connection.onCompletion((handler: TextDocumentPositionParams) => {
 connection.onHover((handler: TextDocumentPositionParams) => {
     console.log("asdf");
     if (provider && provider.hoverProvider) {
-        return provider.hoverProvider.provideHover(handler);
+        return provider.hoverProvider.provideHover(documents.get(handler.textDocument.uri), handler.position);
     }
     return Promise.resolve({contents: ""});
 });

@@ -19,7 +19,7 @@ function createWordRegExp(allowInWords: string = ""): RegExp {
         }
         source += "\\" + seperator;
     }
-    source += "\s]+)";
+    source += "\\s]+)";
     return new RegExp(source, "g");
 }
 
@@ -124,7 +124,7 @@ export function matchWordAtText(column: number, text: string, textOffset: number
 }
 
 export function getWordAtText(column: number, wordDefinition: RegExp, text: string, textOffset: number): IWordAtPosition | null {
-    const result = getWordAtPosFast(column, wordDefinition, text, textOffset);
+    const result = getWordAtPosSlow(column, wordDefinition, text, textOffset);
     // both (getWordAtPosFast and getWordAtPosSlow) leave the wordDefinition-RegExp
     // in an undefined state and to not confuse other users of the wordDefinition
     // we reset the lastIndex
