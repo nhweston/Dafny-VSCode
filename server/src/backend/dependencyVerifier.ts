@@ -40,8 +40,8 @@ export class DependencyVerifier {
     private spawnNewProcess(dafnyCommand: Command, options: cp.SpawnOptions): ProcessWrapper {
         const process = cp.spawn(dafnyCommand.command, dafnyCommand.args, options);
         process.on("error", (e) => { this.callbackError!(e); });
-        process.on("exit", (e) => { this.handleProcessExit(e); });
-        process.stdin.on("error", (e) => { this.callbackError!(e); });
+        process.on("exit", (e: number) => { this.handleProcessExit(e); });
+        process.stdin?.on("error", (e) => { this.callbackError!(e); });
 
         return new ProcessWrapper(process,
             (err: Error) => { this.callbackError!(err); },

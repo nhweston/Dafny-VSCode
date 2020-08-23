@@ -1,4 +1,4 @@
-import { Range } from "vscode-languageserver-types/lib/main";
+import { Range } from "vscode-languageserver-types";
 import { rangesIntersect } from "./../../vscodeFunctions/positionHelper";
 import { DafnySymbol, SymbolType } from "./symbols";
 

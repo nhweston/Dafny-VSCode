@@ -1,6 +1,6 @@
 import {EOL} from "os";
 import {Command} from "vscode-languageserver";
-import { Position, TextEdit} from "vscode-languageserver-types/lib/main";
+import { Position, TextEdit} from "vscode-languageserver-types";
 import { Commands, DafnyKeyWords, DafnyReports } from "./../../../strings/stringRessources";
 import { methodAt } from "./../semanticAnalysis";
 import { DafnySymbol } from "./../symbols";

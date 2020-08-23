@@ -29,10 +29,10 @@ export class DafnyCompiler {
             process.on("exit", () => {
                 resolve({ error: false, executable });
             });
-            process.stdout.on("error", (data: Buffer) => {
+            process.stdout?.on("error", (data: Buffer) => {
                 reject({ error: true, message: data.toString() });
             });
-            process.stdout.on("data", (data: Buffer) => {
+            process.stdout?.on("data", (data: Buffer) => {
                 const str = data.toString();
 
                 if (str.toLowerCase().includes("error") && !str.toLowerCase().includes("0 errors")) {

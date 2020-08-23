@@ -1,5 +1,5 @@
 import {CodeActionParams, Command, Diagnostic} from "vscode-languageserver";
-import { Position, TextDocument} from "vscode-languageserver-types/lib/main";
+import { Position, TextDocument} from "vscode-languageserver-types";
 import { DocumentDecorator } from "./../../../vscodeFunctions/documentDecorator";
 import { DafnyServer } from "./../../dafnyServer";
 import { DafnySymbol } from "./../symbols";

@@ -1,7 +1,7 @@
 "use strict";
 import {EOL} from "os";
 import { TextDocumentPositionParams } from "vscode-languageserver-protocol";
-import { CompletionItem, CompletionItemKind, Position, TextDocument } from "vscode-languageserver-types/lib/main";
+import { CompletionItem, CompletionItemKind, Position, TextDocument } from "vscode-languageserver-types";
 import { DocumentDecorator } from "./../../vscodeFunctions/documentDecorator";
 import { DafnyServer } from "./../dafnyServer";
 import {DafnySymbol, SymbolType } from "./symbols";

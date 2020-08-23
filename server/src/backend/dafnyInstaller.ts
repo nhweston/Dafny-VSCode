@@ -206,7 +206,7 @@ export class DafnyInstaller {
                     });
                 });
                 request.on("error", (err: Error) => {
-                    fs.unlink(filePath);
+                    fs.unlink(filePath, () => { return; });
                     throw err;
                 });
             } catch (e) {

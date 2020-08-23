@@ -21,7 +21,7 @@ import { LanguageServerNotification, LanguageServerRequest } from "./strings/str
 const MAX_CONNECTION_RETRIES = 30;
 
 const connection: IConnection = createConnection(new IPCMessageReader(process), new IPCMessageWriter(process));
-const documents: TextDocuments = new TextDocuments();
+const documents: TextDocuments<string> = new TextDocuments();
 const codeLenses: { [codeLens: string]: ReferencesCodeLens; } = {};
 let settings: ISettings;
 let started: boolean = false;

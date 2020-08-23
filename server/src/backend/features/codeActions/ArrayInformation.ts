@@ -1,4 +1,4 @@
-import { Position } from "vscode-languageserver-types/lib/main";
+import { Position } from "vscode-languageserver-types";
 import { DocumentDecorator } from "./../../../vscodeFunctions/documentDecorator";
 export class ArrayInformation {
     public identifier: string;
