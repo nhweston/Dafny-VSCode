@@ -18,7 +18,8 @@ export class DafnyHoverProvider {
             if (doc !== null) {
                 return {
                     contents: {
-                        language: "dafny",
+                        // @ts-ignore
+                        kind: "markdown",
                         value: doc,
                     },
                     range: undefined,
@@ -27,7 +28,7 @@ export class DafnyHoverProvider {
         }
         return {
             contents: {
-                language: "dafny",
+                language: "markdown",
                 value: "no internal definition",
             },
             range: undefined,
