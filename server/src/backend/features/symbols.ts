@@ -26,7 +26,7 @@ export class DafnySymbol {
     public ensures: string[];
     public referencedClass: string | undefined;
     public referencedModule: string | undefined;
-    public docComment: string | null;
+    public doc: string | null;
 
     constructor(symbol: any, document: TextDocument) {
         this.column = adjustDafnyColumnPositionInfo(symbol.Column);
@@ -43,7 +43,7 @@ export class DafnySymbol {
         this.document = document;
         this.requires = [];
         this.ensures = [];
-        this.docComment = symbol.DocComment;
+        this.doc = symbol.Doc;
     }
     public setSymbolType(type: string): void {
         switch (type) {

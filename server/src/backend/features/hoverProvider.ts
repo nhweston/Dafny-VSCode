@@ -14,12 +14,12 @@ export class DafnyHoverProvider {
         const symbol = await this.provideDefinition(document, position);
         console.log(JSON.stringify(symbol, null, 4));
         if (symbol) {
-            const { docComment } = symbol;
-            if (docComment !== null) {
+            const { doc } = symbol;
+            if (doc !== null) {
                 return {
                     contents: {
                         language: "dafny",
-                        value: docComment,
+                        value: doc,
                     },
                     range: undefined,
                 };
