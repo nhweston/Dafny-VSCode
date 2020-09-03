@@ -5,6 +5,10 @@ import { Reference } from "./Reference";
 export enum SymbolType {
     Unknown, Class, Method, Function, Field, Call, Definition, Predicate,
 }
+export interface ISpec {
+    Expression: string;
+    Doc: string;
+}
 export class DafnySymbol {
     public column: number;
     public endColumn: number | undefined;
@@ -22,8 +26,8 @@ export class DafnySymbol {
     public range: Range;
     public call: string;
     public document: TextDocument;
-    public requires: string[];
-    public ensures: string[];
+    public requires: ISpec[];
+    public ensures: ISpec[];
     public referencedClass: string | undefined;
     public referencedModule: string | undefined;
     public doc: string | null;
@@ -67,19 +71,17 @@ export class DafnySymbol {
     public isValid(): boolean {
         return !isNaN(this.column) && !isNaN(this.line) && this.name !== "" && this.name !== undefined;
     }
-    public addEnsuresClauses(clauses: any) {
+    public addEnsuresClauses(clauses: ISpec[]) {
         this.ensures = this.addClauses(clauses);
-
     }
-    public addRequiresClauses(clauses: any) {
+    public addRequiresClauses(clauses: ISpec[]) {
         this.requires = this.addClauses(clauses);
     }
-
     public prettyEnsures(): string[] {
-        return this.ensures.map((e: string) => "Ensures " + e);
+        return this.ensures.map((e) => "Ensures " + e.Expression);
     }
     public prettyRequires(): string[] {
-        return this.requires.map((e: string) => "Requires " + e);
+        return this.requires.map((e) => "Requires " + e.Expression);
     }
     public needsCodeLens(): boolean {
         return !(this.name === DafnyKeyWords.DefaultModuleName && this.isOfType([SymbolType.Class])) &&
@@ -145,8 +147,8 @@ export class DafnySymbol {
         return this.name === name;
     }
 
-    private addClauses(clauses: any): string[] {
-        const clauseHolder: string[] = [];
+    private addClauses(clauses: ISpec[]): ISpec[] {
+        const clauseHolder: ISpec[] = [];
         if (clauses && clauses.length) {
             for (const clause of clauses) {
                 clauseHolder.push(clause);

@@ -4,27 +4,57 @@ import { Hover, Position, TextDocument } from "vscode-languageserver";
 import { DocumentDecorator } from "../../vscodeFunctions/documentDecorator";
 import { DafnyServer } from "../dafnyServer";
 import { DafnyDefinitionInformation } from "./DafnyDefinitionInformation";
-import { DafnySymbol, SymbolType } from "./symbols";
+import { DafnySymbol, SymbolType, ISpec } from "./symbols";
 
 export class DafnyHoverProvider {
 
     public constructor(public server: DafnyServer) {}
 
+    public appendSpecs(
+        buf: string[],
+        specs: ISpec[],
+        heading: string,
+        prefix: string,
+    ) {
+        if (specs.length > 0) {
+            buf.push("\n\n---\n\n## ", heading, "\n");
+            for (const spec of specs) {
+                const doc = spec.Doc;
+                const expr = spec.Expression;
+                if (doc) {
+                    buf.push("\n- ", doc, "\n\n`", prefix, " ", expr, "`");
+                } else {
+                    buf.push("\n\n`", prefix, " ", expr, "`");
+                }
+            }
+        }
+    }
+
+    public getDoc(symbol: DafnySymbol): string {
+        const result = [];
+        const body = symbol.doc;
+        if (body) {
+            result.push(body);
+        }
+        this.appendSpecs(result, symbol.requires, "Preconditions", "requires");
+        this.appendSpecs(result, symbol.ensures, "Postconditions", "ensures");
+        console.log(result.join(""));
+        return result.join("");
+    }
+
     public async provideHover(document: TextDocument, position: Position): Promise<Hover> {
         const symbol = await this.provideDefinition(document, position);
         console.log(JSON.stringify(symbol, null, 4));
         if (symbol) {
-            const { doc } = symbol;
-            if (doc !== null) {
-                return {
-                    contents: {
-                        // @ts-ignore
-                        kind: "markdown",
-                        value: doc,
-                    },
-                    range: undefined,
-                };
-            }
+            const doc = this.getDoc(symbol);
+            return {
+                contents: {
+                    // @ts-ignore
+                    kind: "markdown",
+                    value: doc,
+                },
+                range: undefined,
+            };
         }
         return {
             contents: {
