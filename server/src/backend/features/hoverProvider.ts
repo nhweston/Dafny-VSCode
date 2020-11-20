@@ -4,7 +4,7 @@ import { Hover, Position, TextDocument } from "vscode-languageserver";
 import { DocumentDecorator } from "../../vscodeFunctions/documentDecorator";
 import { DafnyServer } from "../dafnyServer";
 import { DafnyDefinitionInformation } from "./DafnyDefinitionInformation";
-import { DafnySymbol, SymbolType, ISpec } from "./symbols";
+import { DafnySymbol, ISpec, SymbolType } from "./symbols";
 
 export class DafnyHoverProvider {
 
@@ -32,9 +32,9 @@ export class DafnyHoverProvider {
 
     public getDoc(symbol: DafnySymbol): string {
         const result = [];
-        const body = symbol.doc;
-        if (body) {
-            result.push(body);
+        const { doc } = symbol;
+        if (doc) {
+            result.push(doc.Body);
         }
         this.appendSpecs(result, symbol.requires, "Preconditions", "requires");
         this.appendSpecs(result, symbol.ensures, "Postconditions", "ensures");

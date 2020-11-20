@@ -9,6 +9,15 @@ export interface ISpec {
     Expression: string;
     Doc: string;
 }
+export interface IDoc {
+    Body: string;
+    Tags: IDocTag[];
+}
+export interface IDocTag {
+    Kind: string;
+    Name: string;
+    Body: string;
+}
 export class DafnySymbol {
     public column: number;
     public endColumn: number | undefined;
@@ -30,7 +39,7 @@ export class DafnySymbol {
     public ensures: ISpec[];
     public referencedClass: string | undefined;
     public referencedModule: string | undefined;
-    public doc: string | null;
+    public doc: IDoc | null;
 
     constructor(symbol: any, document: TextDocument) {
         this.column = adjustDafnyColumnPositionInfo(symbol.Column);
